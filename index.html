@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Terapia Ocupacional</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Malla Interactiva Terapia Ocupacional</h1>
+  <div id="contenedor"></div>
+  <script src="script.js"></script>
+  <script>
+    fetch('malla.json')
+      .then(res => res.json())
+      .then(data => {
+        const cont = document.getElementById('contenedor');
+        data.forEach((semestre) => {
+          semestre.materias.forEach((ramo) => {
+            const div = document.createElement('div');
+            div.className = 'ramo';
+            div.innerHTML = `
+              <h2>${ramo.nombre}</h2>
+              <div class="notas">
+                <h3>Notas</h3>
+                <div class="notas-lista"></div>
+                <button onclick="agregarNota(this)">Agregar Nota</button>
+                <p>Promedio: <span class="promedio">0</span></p>
+              </div>
+              <div class="calendario">
+                <h3>Calendario</h3>
+                <input type="date">
+                <input type="text" placeholder="Actividad o entrega">
+                <button onclick="agregarEvento(this)">Agregar Evento</button>
+                <ul class="eventos"></ul>
+              </div>
+            `;
+            cont.appendChild(div);
+          });
+        });
+      });
+  </script>
+</body>
+</html>
